@@ -13,7 +13,7 @@ class Auth():
         """require auth method"""
         if path is None:
             return True
-        elif excluded_paths is None or excluded_paths == []:
+        if excluded_paths is None or excluded_paths == []:
             return True
         if path[-1] != '/':
             path = path + '/'
@@ -24,7 +24,12 @@ class Auth():
 
     def authorization_header(self, request=None) -> str:
         """authorization_header"""
-        return None
+        if request is None:
+            return None
+        header = request.headers.get('Authorization')
+        if header is None:
+            return None
+        return header
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ currnt user"""
