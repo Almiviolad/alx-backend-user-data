@@ -2,6 +2,7 @@
 """contains auth class"""
 from flask import request
 from typing import List, TypeVar
+import re
 
 
 class Auth():
@@ -17,10 +18,11 @@ class Auth():
             return True
         if path[-1] != '/':
             path = path + '/'
-        if path not in excluded_paths:
-            return True
-
-        return False
+        for e_path in excluded_paths:
+            match = re.match(e_path, path)
+            if match:
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """authorization_header"""
