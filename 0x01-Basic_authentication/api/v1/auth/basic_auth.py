@@ -48,3 +48,38 @@ string base64_authorization_header"""
             return (None, None)
         user_info = decoded_base64_authorization_header.split(':')
         return (user_info[0], user_info[1])
+
+    def user_object_from_credentials(self,
+                                     user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
+        """returns the User instance based on his email and password."""
+        if user_email is None:
+            return None
+        if user_pwd is None or type(user_ped) != str:
+            return None
+        try:
+            users = User.search({"email": user_email})
+            if not users or users == []:
+                return None
+            for user in users:
+                if user.is_valid_password(user_pwd):
+                    return user
+            return None
+        except Exception:
+            return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """_summary_
+        """
+        auth_header = self.authorization_header(request)
+        if auth_header is not None:
+            token = self.extract_base64_authorization_header(auth_header)
+            if token is not None:
+                decoded = self.decode_base64_authorization_header(token)
+                if decoded is not None:
+                    email, password = self.extract_user_credentials(decoded)
+                    if email is not None:
+                        return self.user_object_from_credentials(
+                            email, password)
+
+        return
