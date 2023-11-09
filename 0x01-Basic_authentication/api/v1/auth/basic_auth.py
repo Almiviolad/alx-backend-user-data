@@ -2,6 +2,8 @@
 """contains basic authn class"""
 from api.v1.auth.auth import Auth
 import base64
+from typing import TypeVar
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -53,9 +55,9 @@ string base64_authorization_header"""
                                      user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
         """returns the User instance based on his email and password."""
-        if user_email is None:
+        if user_email is None or type(user_email) != str:
             return None
-        if user_pwd is None or type(user_ped) != str:
+        if user_pwd is None or type(user_pwd) != str:
             return None
         try:
             users = User.search({"email": user_email})
