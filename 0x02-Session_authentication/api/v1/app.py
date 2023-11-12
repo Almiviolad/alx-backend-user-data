@@ -42,13 +42,11 @@ def before_request() -> str:
             auth_header = auth.authorization_header(request)
             Scookie = auth.session_cookie(request)
             request.current_user = auth.current_user(request)
+            if auth_header is None and Scookie is None:
+                abort(401)
             if request.current_user is None:
                 abort(403)
-
             if auth_header is None:
-                abort(401)
-
-            if auth_header is None and Scookie is None:
                 abort(401)
 
 
