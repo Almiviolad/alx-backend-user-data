@@ -5,9 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
 from user import Base, User
-from typing import TypeVar
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 
@@ -44,13 +42,10 @@ class DB:
         """returns the first row found in the
 users table as filtered by the method’s
 input arguments"""
-        try:
-            user = self._session.query(
-                User).filter_by(**kwargs).first()
-            if user is None:
-                raise NoResultFound('Not found')
-            return user
-        except InvalidRequestError as e:
-            raise InvalidRequestError("Invalid")
-        finally:
-            self._session.close()
+        if not kwargs:
+            raise InvalidRequestError
+
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if not user:
+            raise NoResultFound
+        return user
