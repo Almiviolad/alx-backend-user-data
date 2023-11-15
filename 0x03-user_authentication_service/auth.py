@@ -48,5 +48,5 @@ arguments and return a User object."""
 
     def _generate_uuid() -> str:
         """return a string representation of a new UUID"""
-        uuid = uuid.uuid4()
-        return str(uuid)
+        new_uuid = uuid.uuid4()
+        return str(new_uuid)
