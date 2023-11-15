@@ -17,6 +17,12 @@ hashed with bcrypt.hashpw."""
     return hashed_password
 
 
+def _generate_uuid() -> str:
+    """return a string representation of a new UUID"""
+    new_uuid = uuid.uuid4()
+    return str(new_uuid)
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -45,8 +51,3 @@ arguments and return a User object."""
             return False
         except NoResultFound:
             return False
-
-    def _generate_uuid() -> str:
-        """return a string representation of a new UUID"""
-        new_uuid = uuid.uuid4()
-        return str(new_uuid)
