@@ -70,3 +70,11 @@ and returns the session ID as a string."""
             return self._db.find_user_by(session_id=session_id)
         except Exception:
             return None
+
+    def destroy_session(self, user_id: int) -> None:
+        """updates the corresponding user’s session ID to None."""
+        try:
+            self._db.update_user(user.id, session_id=None)
+            return user.session_id
+        except Exception:
+            return None
