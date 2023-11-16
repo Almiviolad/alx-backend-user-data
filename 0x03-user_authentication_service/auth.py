@@ -78,3 +78,16 @@ and returns the session ID as a string."""
             return None
         except Exception as e:
             return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        """Find the user corresponding to the email.
+If the user doebs not exist, raise a ValueError exception.
+If it exists, generate a UUID and update the user’s
+reset_token database field. Return the token."""
+        try:
+            user = self._db.find_user_by(email=email)
+            token = str(uuid.uuid4())
+            self._db.update_user(user.id, reset_token=token)
+            return user.reset_token
+        except Exception:
+            raise ValueError
