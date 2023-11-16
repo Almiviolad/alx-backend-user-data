@@ -75,6 +75,6 @@ and returns the session ID as a string."""
         """updates the corresponding user’s session ID to None."""
         try:
             self._db.update_user(user.id, session_id=None)
-            return user.session_id
+            return None
         except Exception:
             return None

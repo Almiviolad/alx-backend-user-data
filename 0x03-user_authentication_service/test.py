@@ -1,5 +1,8 @@
-from auth import Auth
+from user import User
 
-auth = Auth()
+user = User()
+user.session_id = r3
+user.id = 1
+user.email = mykel
 
-print(auth.get_user_from_session_id('6ebdcd7c-92fa-4b2d-ab62-e09314c3c08a'))
+destroy_session(1)
